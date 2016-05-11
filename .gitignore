@@ -1,0 +1,5 @@
+# Standard node .gitignore
+node_modules
+
+# WebStorm
+.idea
