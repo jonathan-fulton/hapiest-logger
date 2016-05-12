@@ -3,7 +3,7 @@
 const Should = require('should');
 const Winston = require('winston');
 const WinstonLoggerClass = Winston.Logger;
-const Logger = require('../index');
+const Logger = require('../../index');
 
 describe('Index.js', function() {
    it('Should be our Logger class', function() {

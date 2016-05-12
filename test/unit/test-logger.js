@@ -1,9 +1,9 @@
 'use strict';
 
 const Should = require('should');
-const interceptStdout = require('intercept-stdout');
-const LoggerConfigFactory = require('../lib/loggerConfigFactory');
-const LoggerFactory = require('../lib/loggerFactory');
+const LoggerConfigFactory = require('../../lib/loggerConfigFactory');
+const LoggerFactory = require('../../lib/loggerFactory');
+const LoggerWrapper = require('../unit-helper/loggerFactory/loggerWrapper');
 
 describe('Logger', function() {
 
@@ -44,7 +44,7 @@ describe('Logger', function() {
                     loggerFunction: 'debug',
                     msg: 'Debug message',
                     data: {attr1: 'test', attr2: 'something'},
-                    expectedOutput: {level: 'debug', message: 'Debug message', attr1: 'test', attr2: 'something'},
+                    expectedOutput: {level: 'debug', message: 'Debug message', data:{attr1: 'test', attr2: 'something'}},
                     loggerLevelsToTest: ['debug']
                 })
             });
@@ -56,7 +56,7 @@ describe('Logger', function() {
                     loggerFunction: 'info',
                     msg: 'Info message',
                     data: {check: {confirm: true}},
-                    expectedOutput: {level: 'info', message: 'Info message', check: {confirm: true}},
+                    expectedOutput: {level: 'info', message: 'Info message', data:{check: {confirm: true}}},
                     loggerLevelsToTest: ['debug', 'info']
                 })
             });
@@ -77,7 +77,7 @@ describe('Logger', function() {
                     loggerFunction: 'notice',
                     msg: 'Notice message',
                     data: {check: {confirm: true}},
-                    expectedOutput: {level: 'notice', message: 'Notice message', check: {confirm: true}},
+                    expectedOutput: {level: 'notice', message: 'Notice message', data:{check: {confirm: true}}},
                     loggerLevelsToTest: ['debug', 'info', 'notice']
                 })
             });
@@ -98,7 +98,7 @@ describe('Logger', function() {
                     loggerFunction: 'warning',
                     msg: 'warning message',
                     data: {check: {confirm: true}},
-                    expectedOutput: {level: 'warning', message: 'warning message', check: {confirm: true}},
+                    expectedOutput: {level: 'warning', message: 'warning message', data:{check: {confirm: true}}},
                     loggerLevelsToTest: ['debug', 'info', 'notice', 'warning']
                 })
             });
@@ -119,7 +119,7 @@ describe('Logger', function() {
                     loggerFunction: 'error',
                     msg: 'error message',
                     data: {check: {confirm: true}},
-                    expectedOutput: {level: 'error', message: 'error message', check: {confirm: true}},
+                    expectedOutput: {level: 'error', message: 'error message', data:{check: {confirm: true}}},
                     loggerLevelsToTest: ['debug', 'info', 'notice', 'warning', 'error']
                 })
             });
@@ -162,73 +162,5 @@ class Internals {
             const loggerOutput = logger[config.loggerFunction](config.msg, config.data);
             loggerOutput.should.deepEqual(config.expectedOutput);
         });
-    }
-}
-
-class LoggerWrapper {
-    /**
-     * @param {Logger} logger
-     */
-    constructor(logger) {
-        this._logger = logger;
-    }
-
-    /**
-     * @param msg
-     * @param data
-     * @returns {string|object}
-     */
-    debug(msg, data) {
-        return this._captureOutput(this._logger.debug, msg, data);
-    }
-
-    /**
-     * @param msg
-     * @param data
-     * @returns {string|object}
-     */
-    info(msg, data) {
-        return this._captureOutput(this._logger.info, msg, data);
-    }
-
-    /**
-     * @param msg
-     * @param data
-     * @returns {string|object}
-     */
-    notice(msg, data) {
-        return this._captureOutput(this._logger.notice, msg, data);
-    }
-
-    /**
-     * @param msg
-     * @param data
-     * @returns {string|object}
-     */
-    warning(msg, data) {
-        return this._captureOutput(this._logger.warning, msg, data);
-    }
-
-    /**
-     * @param msg
-     * @param data
-     * @returns {string|object}
-     */
-    error(msg, data) {
-        return this._captureOutput(this._logger.error, msg, data);
-    }
-
-    _captureOutput(logFunction, msg, data) {
-        let loggedTxt = '';
-        const unhookIntercept = interceptStdout((txt) => {loggedTxt += txt;});
-        logFunction.bind(this._logger)(msg, data);
-        unhookIntercept();
-
-        let objToReturn = loggedTxt;
-        try {
-            objToReturn = JSON.parse(loggedTxt);
-        } catch(e) {} // Discard error b/c it means we couldn't parse - it's a normal string or something
-
-        return objToReturn;
     }
 }

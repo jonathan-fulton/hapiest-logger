@@ -1,0 +1,10 @@
+{
+    "logger": {
+        "enabled": true,
+        "consoleTransport": {
+            "enabled": true,
+            "level": "info",
+            "colorize": true
+        }
+    }
+}

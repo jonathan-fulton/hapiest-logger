@@ -1,10 +1,10 @@
 {
   "name": "hapiest-logger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A wrapper around Winston that provides explicit functions for syslog logging levels",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha ./test/"
+    "test": "NODE_ENV=test mocha ./test/unit"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,9 @@
     "winston-raygun": "0.0.6"
   },
   "devDependencies": {
+    "config-uncached": "^1.0.2",
     "intercept-stdout": "^0.1.2",
+    "path": "^0.12.7",
     "should": "^8.3.1"
   }
 }
