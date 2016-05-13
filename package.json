@@ -1,6 +1,6 @@
 {
   "name": "hapiest-logger",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A wrapper around Winston that provides explicit functions for syslog logging levels",
   "main": "index.js",
   "scripts": {
