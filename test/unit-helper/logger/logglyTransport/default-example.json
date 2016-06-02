@@ -1,0 +1,12 @@
+{
+    "logger": {
+        "enabled": true,
+        "logglyTransport": {
+            "enabled": true,
+            "level": "info",
+            "token": "your-token-here",
+            "subdomain": "your-subdomain",
+            "tags": ["Winston-NodeJS"]
+        }
+    }
+}

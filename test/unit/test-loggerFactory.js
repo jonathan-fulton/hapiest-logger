@@ -10,7 +10,7 @@ const LoggerWrapper = require('../unit-helper/loggerFactory/loggerWrapper');
 describe('LoggerFactory', function() {
     describe('createLoggerFromNodeConfig', function() {
 
-        it('Should create an info-level console logger ', function() {
+        it('Should create an info-level logger with both console and Loggly transports', function() {
 
             const configDir = Path.resolve(__dirname, '../unit-helper/loggerFactory/config-1');
             process.env.NODE_CONFIG_DIR = configDir;
@@ -19,6 +19,9 @@ describe('LoggerFactory', function() {
 
             Should.exist(logger);
             logger.should.be.an.instanceOf(Logger);
+            Should.exist(logger.logger.transports);
+            Should.exist(logger.logger.transports.console);
+            Should.exist(logger.logger.transports.loggly);
 
             const loggerWrapper = new LoggerWrapper(logger);
 

@@ -5,6 +5,12 @@
             "enabled": true,
             "level": "info",
             "colorize": true
+        },
+        "logglyTransport": {
+            "enabled": true,
+            "level": "info",
+            "token": "some-token",
+            "subdomain": "hapiest-logger-test"
         }
     }
 }

@@ -3,3 +3,6 @@ node_modules
 
 # WebStorm
 .idea
+
+# File that should be defined by user with their Loggly credentials
+test/unit-helper/logger/logglyTransport/default.json

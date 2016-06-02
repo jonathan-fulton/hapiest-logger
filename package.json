@@ -1,6 +1,6 @@
 {
   "name": "hapiest-logger",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A wrapper around Winston that provides explicit functions for syslog logging levels",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/jonathan-fulton/hapiest-logger#readme",
   "dependencies": {
     "config": "^1.20.1",
-    "hapiest-vo": "^0.0.3",
+    "hapiest-vo": "^0.0.4",
     "joi": "^8.1.0",
     "newrelic-winston": "0.0.1",
     "winston": "^2.2.0",

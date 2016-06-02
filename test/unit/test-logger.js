@@ -1,6 +1,8 @@
 'use strict';
 
 const Should = require('should');
+const Path = require('path');
+const NodeConfig = require('config-uncached');
 const LoggerConfigFactory = require('../../lib/loggerConfigFactory');
 const LoggerFactory = require('../../lib/loggerFactory');
 const LoggerWrapper = require('../unit-helper/loggerFactory/loggerWrapper');
@@ -126,6 +128,16 @@ describe('Logger', function() {
         });
     });
 
+    describe('Loggly Transport', function() {
+
+        it('Should log messages to Loggly', function(done) {
+            const logger = Internals.createLogglyLogger();
+            logger.info('Sending this message to Loggly!');
+            setTimeout(done,1000); // Need the timeout so it gets to Loggly
+        });
+
+    })
+
 });
 
 class Internals {
@@ -146,6 +158,12 @@ class Internals {
         const logger = LoggerFactory.createLogger(loggerConfig);
 
         return new LoggerWrapper(logger);
+    }
+
+    static createLogglyLogger() {
+        const configDir = Path.resolve(__dirname, '../unit-helper/logger/logglyTransport');
+        process.env.NODE_CONFIG_DIR = configDir;
+        return LoggerFactory.createLoggerFromNodeConfig(NodeConfig(true));
     }
 
     /**
